@@ -3,7 +3,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 
-const app = express();
+import { errorHandler } from "./middlewares/error-handler"
+import { notFound } from "./middlewares/not-found"
+
+export const app = express();
 
 app.use(cors());
 app.use(morgan('tiny'));
@@ -14,4 +17,5 @@ app.get('/', (req, res) => {
   res.json({ message: 'Server is on!' });
 });
 
-export default app;
+app.use(notFound)
+app.use(errorHandler)
